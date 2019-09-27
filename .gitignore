@@ -3,10 +3,14 @@
 /public/storage
 /storage/*.key
 /vendor
+_ide_helper.php
 .env
 .env.backup
+.DS_Store
 .phpunit.result.cache
+composer.lock
 Homestead.json
 Homestead.yaml
 npm-debug.log
+package-lock.json
 yarn-error.log
