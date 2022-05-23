@@ -1,7 +1,9 @@
 <?php
 
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Symfony\Component\HttpFoundation\Response;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,5 +17,17 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+    return new JsonResponse([
+        'status'  => 'Success',
+        'message' => Response::$statusTexts[Response::HTTP_OK],
+        'data'    => $request->user(),
+    ], Response::HTTP_OK);
+});
+
+Route::middleware('auth:sanctum')->get('/messages', function (Request $request) {
+    return new JsonResponse([
+        'status'  => 'Success',
+        'message' => Response::$statusTexts[Response::HTTP_OK],
+        'data'    => [],
+    ], Response::HTTP_OK);
 });
