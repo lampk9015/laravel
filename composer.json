@@ -11,6 +11,7 @@
         "laravel/framework": "^8.75",
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
+        "orchid/platform": "^11.0",
         "symfony/symfony": "^5.4"
     },
     "require-dev": {
