@@ -9,66 +9,75 @@
         </template>
 
         <template #form>
-            <div class="col-span-6">
+            <div class="mb-3">
                 <jet-label value="Team Owner" />
 
-                <div class="flex items-center mt-2">
-                    <img class="object-cover w-12 h-12 rounded-full" :src="$page.props.user.profile_photo_url" :alt="$page.props.user.name">
+                <div class="d-flex mt-2">
+                    <img class="rounded-circle" width="48" :src="$page.props.user.profile_photo_url" :alt="$page.props.user.name">
 
-                    <div class="ml-4 leading-tight">
+                    <div class="ms-2">
                         <div>{{ $page.props.user.name }}</div>
-                        <div class="text-sm text-gray-700">{{ $page.props.user.email }}</div>
+                        <div class="text-muted">{{ $page.props.user.email }}</div>
                     </div>
                 </div>
             </div>
 
-            <div class="col-span-6 sm:col-span-4">
+            <div class="w-75">
+              <div class="mb-3">
                 <jet-label for="name" value="Team Name" />
-                <jet-input id="name" type="text" class="block w-full mt-1" v-model="form.name" autofocus />
-                <jet-input-error :message="form.errors.name" class="mt-2" />
+                <jet-input id="name" type="text" v-model="form.name" autofocus
+                           :class="{ 'is-invalid': form.errors.name }" />
+                <jet-input-error :message="form.errors.name" />
+              </div>
             </div>
         </template>
 
         <template #actions>
-            <jet-button :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                Create
+            <jet-button :class="{ 'text-white-50': form.processing }" :disabled="form.processing">
+              <div v-show="form.processing" class="spinner-border spinner-border-sm" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </div>
+
+              Save
             </jet-button>
         </template>
     </jet-form-section>
 </template>
 
 <script>
-    import { defineComponent } from 'vue'
-    import JetButton from '@/Jetstream/Button.vue'
-    import JetFormSection from '@/Jetstream/FormSection.vue'
-    import JetInput from '@/Jetstream/Input.vue'
-    import JetInputError from '@/Jetstream/InputError.vue'
-    import JetLabel from '@/Jetstream/Label.vue'
+import { defineComponent } from 'vue'
+import JetActionMessage from '@/Jetstream/ActionMessage.vue'
+import JetButton from '@/Jetstream/Button.vue'
+import JetFormSection from '@/Jetstream/FormSection.vue'
+import JetInput from '@/Jetstream/Input.vue'
+import JetInputError from '@/Jetstream/InputError.vue'
+import JetLabel from '@/Jetstream/Label.vue'
 
-    export default defineComponent({
-        components: {
-            JetButton,
-            JetFormSection,
-            JetInput,
-            JetInputError,
-            JetLabel,
-        },
+export default defineComponent({
+  components: {
+    JetActionMessage,
+    JetButton,
+    JetFormSection,
+    JetInput,
+    JetInputError,
+    JetLabel,
+  },
 
-        data() {
-            return {
-                form: this.$inertia.form({
-                    name: '',
-                })
-            }
-        },
+  data() {
+    return {
+      form: this.$inertia.form({
+        name: '',
+      })
+    }
+  },
 
-        methods: {
-            createTeam() {
-                this.form.post(route('teams.store'), {
-                    errorBag: 'createTeam',
-                    preserveScroll: true
-                });
-            },
-        },
-    })
+  methods: {
+    createTeam() {
+      this.form.post(route('teams.store'), {
+        errorBag: 'createTeam',
+        preserveScroll: true
+      });
+    },
+  },
+})
 </script>
