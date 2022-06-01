@@ -2,12 +2,17 @@
 
 namespace App\Providers;
 
+use App\Domains\Auth\Models\User;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Route;
 
+/**
+ * Class RouteServiceProvider.
+ */
 class RouteServiceProvider extends ServiceProvider
 {
     /**
@@ -17,7 +22,7 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @var string
      */
-    public const HOME = '/home';
+    public const HOME = '/';
 
     /**
      * The controller namespace for the application.
@@ -46,6 +51,17 @@ class RouteServiceProvider extends ServiceProvider
             Route::middleware('web')
                 ->namespace($this->namespace)
                 ->group(base_path('routes/web.php'));
+
+            // For the 'Login As' functionality from the 404labfr/laravel-impersonate package
+            Route::middleware('web')
+                ->group(function (Router $router) {
+                    $router->impersonate();
+                });
+        });
+
+        // To be able to restore a user, since the default binding is a find and would result in a 404
+        Route::bind('deletedUser', function ($id) {
+            return User::onlyTrashed()->find($id);
         });
     }
 

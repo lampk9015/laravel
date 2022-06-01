@@ -1,0 +1,9 @@
+@import "../global";
+
+// Coreui
+@import '~@coreui/coreui/scss/coreui';
+@import '~@coreui/icons/css/free.min.css';
+
+select.form-control {
+    padding-left: 0.5rem;
+}

@@ -67,7 +67,7 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    'timezone' => env('APP_TIMEZONE', 'UTC'),
 
     /*
     |--------------------------------------------------------------------------
@@ -171,8 +171,14 @@ return [
          */
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
+        App\Providers\BladeServiceProvider::class,
         // App\Providers\BroadcastServiceProvider::class,
+        App\Providers\ComposerServiceProvider::class,
+        App\Providers\DebugServiceProvider::class,
         App\Providers\EventServiceProvider::class,
+        App\Providers\HelperServiceProvider::class,
+        App\Providers\LocaleServiceProvider::class,
+        App\Providers\ObserverServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
     ],
@@ -230,6 +236,48 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
 
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Application Debug Blacklist
+    |--------------------------------------------------------------------------
+    |
+    | Remove the environment variables, database details and the information
+    | showing on Laravel Debug.
+    |
+    */
+
+    'debug_blacklist' => [
+        '_COOKIE' => array_keys($_COOKIE),
+
+        '_ENV' => [
+            'APP_KEY',
+            'ADMIN_DIR',
+            'DB_DATABASE',
+            'DB_USERNAME',
+            'DB_PASSWORD',
+            'REDIS_PASSWORD',
+            'MAIL_PASSWORD',
+            'PUSHER_APP_KEY',
+            'PUSHER_APP_SECRET',
+        ],
+
+        '_SERVER' => [
+            'APP_KEY',
+            'ADMIN_DIR',
+            'DB_DATABASE',
+            'DB_USERNAME',
+            'DB_PASSWORD',
+            'REDIS_PASSWORD',
+            'MAIL_PASSWORD',
+            'PUSHER_APP_KEY',
+            'PUSHER_APP_SECRET',
+        ],
+
+        '_POST' => [
+            'password',
+        ],
     ],
 
 ];

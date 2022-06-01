@@ -5,26 +5,43 @@
     "keywords": ["framework", "laravel"],
     "license": "MIT",
     "require": {
-        "php": "^7.3|^8.0",
+        "php": "^7.4|^8.0",
+        "arcanedev/log-viewer": "8.x",
+        "darkghosthunter/laraguard": "^3.0",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
+        "jamesmills/laravel-timezone": "^1.9",
+        "lab404/laravel-impersonate": "^1.6",
+        "langleyfoxall/laravel-nist-password-rules": "^4.1",
         "laravel/framework": "^8.75",
         "laravel/sanctum": "^2.11",
+        "laravel/socialite": "^5.0",
         "laravel/tinker": "^2.5",
-        "symfony/symfony": "^5.4"
+        "laravel/ui": "^3.0",
+        "livewire/livewire": "^2.0",
+        "rappasoft/laravel-livewire-tables": "^1.0",
+        "rappasoft/lockout": "^3.0",
+        "spatie/laravel-activitylog": "^3.14",
+        "spatie/laravel-permission": "^3.11",
+        "symfony/symfony": "^5.4",
+        "tabuna/breadcrumbs": "^2.2"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.2",
         "barryvdh/laravel-ide-helper": "^2.6",
+        "brianium/paratest": "^6.2",
         "facade/ignition": "^2.5",
         "fakerphp/faker": "^1.9.1",
         "friendsofphp/php-cs-fixer": "^3.8",
+        "laravel/browser-kit-testing": "^6.2",
         "laravel/sail": "^1.0.1",
+        "laravel/telescope": "^4.4",
         "mockery/mockery": "^1.4.4",
         "neronmoon/scriptsdev": "^0.1.9",
         "nunomaduro/collision": "^5.10",
         "phpunit/phpunit": "^9.5.10",
-        "psr/log": "^1.1"
+        "psr/log": "^1.1",
+        "roave/security-advisories": "dev-master"
     },
     "autoload": {
         "psr-4": {
@@ -69,11 +86,16 @@
             "composer cache-all"
         ],
         "test": "@php artisan test --parallel",
-        "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
+        "test-coverage": "vendor/bin/phpunit --coverage-html coverage",
+        "format": "vendor/bin/php-cs-fixer fix --allow-risky=yes"
     },
     "extra": {
         "laravel": {
-            "dont-discover": []
+            "dont-discover": [
+                "barryvdh/laravel-debugbar",
+                "barryvdh/laravel-ide-helper",
+                "laravel/telescope"
+            ]
         },
         "scripts-dev": {
             "ide-helper": [
@@ -94,6 +116,7 @@
     },
     "config": {
         "allow-plugins": {
+            "treeware/plant": true,
             "neronmoon/scriptsdev": true
         },
         "optimize-autoloader": true,
