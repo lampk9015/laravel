@@ -40,6 +40,16 @@ class UserFactory extends Factory
     /**
      * @return UserFactory
      */
+    public function empty()
+    {
+        return $this->state(function (array $attributes) {
+            return [];
+        });
+    }
+
+    /**
+     * @return UserFactory
+     */
     public function admin()
     {
         return $this->state(function (array $attributes) {
