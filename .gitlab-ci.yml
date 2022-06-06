@@ -1,0 +1,145 @@
+.download_composer_phar: &download_composer_phar |
+  apt-get update -yqq
+  apt-get install libzip-dev zip unzip git wget -yqq
+  wget https://composer.github.io/installer.sig -O - -q | tr -d '\n' > installer.sig
+  php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+  php -r "if (hash_file('SHA384', 'composer-setup.php') === file_get_contents('installer.sig')) { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
+  php composer-setup.php
+  php -r "unlink('composer-setup.php'); unlink('installer.sig');"
+
+.config_env_file: &config_env_file |
+  cp .env.example .env
+  sed -i 's/APP_ENV=local/APP_ENV=testing/g' .env
+  sed -i 's/APP_READ_ONLY_LOGIN=true/APP_READ_ONLY_LOGIN=true\nAPP_TESTING=true/g' .env
+  sed -i 's/DB_CONNECTION=mysql/DB_CONNECTION=sqlite/g' .env
+  sed -i 's/CACHE_DRIVER=file/CACHE_DRIVER=array/g' .env
+  sed -i 's/SESSION_DRIVER=file/SESSION_DRIVER=array/g' .env
+  sed -i 's/DB_HOST=127.0.0.1/# DB_HOST=127.0.0.1/g' .env
+  sed -i 's/DB_PORT=3306/# DB_PORT=3306/g' .env
+  sed -i 's/DB_DATABASE=laravel/# DB_DATABASE=laravel/g' .env
+  sed -i 's/DB_USERNAME=root/# DB_USERNAME=root/g' .env
+  sed -i 's/DB_PASSWORD=/# DB_PASSWORD=\nDB_FOREIGN_KEYS=true\n/g' .env
+  sed -i 's/MAIL_MAILER=smtp/MAIL_MAILER=array/g' .env
+  sed -i 's/ADMIN_REQUIRES_2FA=true/ADMIN_REQUIRES_2FA=false/g' .env
+  php artisan key:generate
+
+variables:
+  COMPOSER_CACHE_DIR: "${CI_PROJECT_DIR}/.composer/cache"
+
+stages:
+  - build
+  - test
+  - deploy
+
+composer:
+  stage: build
+  image: php:8.0
+  before_script:
+    - *download_composer_phar
+  script:
+    - php composer.phar install --prefer-dist --no-ansi --no-interaction --no-scripts --no-progress --ignore-platform-reqs
+    - *config_env_file
+  cache:
+    - key: "$CI_COMMIT_SHORT_SHA-composer"
+      paths:
+        - composer.phar
+      policy: push
+    - key: "$CI_COMMIT_SHORT_SHA-vendor"
+      paths:
+        - .env
+        - vendor/
+      policy: push
+
+npm:
+  stage: build
+  image: node:16.15.0
+  script:
+   - npm install --silent
+   - npm run prod --quiet
+  cache:
+    - key: "$CI_COMMIT_SHORT_SHA-npm"
+      paths:
+        - node_modules/
+      policy: push
+    - key: "$CI_COMMIT_SHORT_SHA-public"
+      paths:
+        - public/css/
+        - public/fonts/
+        - public/js/
+        - public/vendor/
+        - public/mix-manifest.json
+      policy: push
+
+codestyle:
+  stage: test
+  image: php:8.0
+  dependencies:
+    - composer
+  script:
+    - php composer.phar sniff
+  cache:
+    - key: "$CI_COMMIT_SHORT_SHA-composer"
+      paths:
+        - composer.phar
+      policy: pull
+    - key: "$CI_COMMIT_SHORT_SHA-vendor"
+      paths:
+        - vendor/
+      policy: pull
+
+phpunit:
+  stage: test
+  image: php:8.0
+  dependencies:
+    - composer
+  before_script:
+    - cp .env .env.testing
+    - touch database/database.sqlite
+    - php artisan migrate:fresh --seed
+  script:
+    - vendor/bin/phpunit --colors --stop-on-failure
+  cache:
+    - key: "$CI_COMMIT_SHORT_SHA-vendor"
+      paths:
+        - .env
+        - vendor/
+      policy: pull
+    - key: "$CI_COMMIT_SHORT_SHA-public"
+      paths:
+        - public/css/
+        - public/fonts/
+        - public/js/
+        - public/vendor/
+        - public/mix-manifest.json
+      policy: pull
+
+staging:
+  stage: deploy
+  image: docker:19.03
+  services:
+    - docker:dind
+  environment:
+    name: staging
+    url: http://dev.example.com
+  dependencies:
+    - composer
+    - npm
+  script:
+    - ls -alh .
+    - ls -alh public/
+    - echo "ready to deploy to staging server.."
+
+production:
+  stage: deploy
+  image: docker:19.03
+  services:
+    - docker:dind
+  environment:
+    name: production
+    url: http://example.com
+  dependencies:
+    - composer
+    - npm
+  script:
+    - echo "ready to deploy to production server.."
+  when: manual
