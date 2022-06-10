@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Illuminate\Auth\SessionGuard;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 
@@ -18,6 +19,18 @@ class AuthServiceProvider extends ServiceProvider
     protected $policies = [
         // 'App\Models\Model' => 'App\Policies\ModelPolicy',
     ];
+
+    /**
+     * Register any application services.
+     *
+     * @return void
+     */
+    public function register()
+    {
+        SessionGuard::macro('adminUser', function () {
+            return \App\Domains\Auth\Models\Admin::find(\Auth::id());
+        });
+    }
 
     /**
      * Register any authentication / authorization services.

@@ -67,4 +67,21 @@ trait UserAttribute
             })
             ->implode('<br/>');
     }
+
+    /**
+     * @return string
+     */
+    // public function getProfilesAttribute()
+    // {
+    //     $profiles = [];
+
+    //     $records = \App\Domains\Auth\Models\Profile::where('user_id', $this->id)->get()->toArray();
+    //     foreach ($records as $record) {
+    //         $profile_types = explode("\\", $record['profile_type']);
+    //         $key = strtolower(str_replace('Profile', '', end($profile_types)));
+    //         $profiles[$key] = $record['profile'];
+    //     }
+
+    //     return $profiles;
+    // }
 }

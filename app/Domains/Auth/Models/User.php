@@ -99,14 +99,20 @@ class User extends Authenticatable implements MustVerifyEmail, TwoFactorAuthenti
      */
     protected $appends = [
         'avatar',
+        // 'profiles',
     ];
 
     /**
      * @var string[]
      */
     protected $with = [
+        // 'adminProfile',
+        // 'customerProfile',
         'permissions',
+        // 'profiles',
         'roles',
+        // 'saleProfile',
+        // 'staffProfile',
     ];
 
     /**
