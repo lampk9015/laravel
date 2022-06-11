@@ -4,6 +4,12 @@
     "description": "The Laravel Framework.",
     "keywords": ["framework", "laravel"],
     "license": "MIT",
+    "repositories": [
+        {
+            "type": "path",
+            "url": "./packages/**/*"
+        }
+    ],
     "require": {
         "php": "^7.4|^8.0",
         "arcanedev/log-viewer": "8.x",
@@ -19,10 +25,12 @@
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.0",
         "livewire/livewire": "^2.0",
+        "nwidart/laravel-modules": "*",
         "rappasoft/laravel-livewire-tables": "^1.0",
         "rappasoft/lockout": "^3.0",
         "spatie/laravel-activitylog": "^3.14",
         "spatie/laravel-permission": "^3.11",
+        "symfony/filesystem": "^5.4",
         "symfony/symfony": "^5.4",
         "tabuna/breadcrumbs": "^2.2"
     },

@@ -1,0 +1,34 @@
+{
+    "name": "$VENDOR$/$HYPHEN_NAME$",
+    "description": "",
+    "authors": [
+        {
+            "name": "$AUTHOR_NAME$",
+            "email": "$AUTHOR_EMAIL$"
+        }
+    ],
+    "extra": {
+        "classmap": [
+            "database/factories",
+            "database/seeds"
+        ],
+        "laravel": {
+            "providers": [],
+            "aliases": {}
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "$MODULE_NAMESPACE$\\$STUDLY_NAME$\\": "src/",
+            "$MODULE_NAMESPACE$\\$STUDLY_NAME$\\Database\\Factories\\": "database/factories/",
+            "$MODULE_NAMESPACE$\\$STUDLY_NAME$\\Database\\Seeder\\": "database/seeder/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "$MODULE_NAMESPACE$\\$STUDLY_NAME$\\Tests\\": "tests/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}

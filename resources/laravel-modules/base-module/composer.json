@@ -1,0 +1,34 @@
+{
+    "name": "code-for-food/{module-}",
+    "description": "",
+    "authors": [
+        {
+            "name": "Lam Pham",
+            "email": "phamkhaclam90@gmail.com"
+        }
+    ],
+    "extra": {
+        "classmap": [
+            "database/factories",
+            "database/seeds"
+        ],
+        "laravel": {
+            "providers": [],
+            "aliases": {}
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\{Module}\\": "src/",
+            "Modules\\{Module}\\Database\\Factories\\": "database/factories/",
+            "Modules\\{Module}\\Database\\Seeder\\": "database/seeder/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Modules\\{Module}\\Tests\\": "tests/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
