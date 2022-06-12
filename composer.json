@@ -4,9 +4,16 @@
     "description": "The Laravel Framework.",
     "keywords": ["framework", "laravel"],
     "license": "MIT",
+    "repositories": [
+        {
+            "type": "path",
+            "url": "./packages/code-for-food/*"
+        }
+    ],
     "require": {
         "php": "^7.4|^8.0",
         "arcanedev/log-viewer": "8.x",
+        "code-for-food/compound-r": "^8.0",
         "darkghosthunter/laraguard": "^3.0",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
@@ -94,6 +101,7 @@
             "dont-discover": [
                 "barryvdh/laravel-debugbar",
                 "barryvdh/laravel-ide-helper",
+                "code-for-food/compound-r",
                 "laravel/telescope"
             ]
         },

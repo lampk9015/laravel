@@ -165,6 +165,7 @@ return [
         /*
          * Package Service Providers...
          */
+        Code4Food\CompoundR\Providers\BaseServiceProvider::class,
 
         /*
          * Application Service Providers...
