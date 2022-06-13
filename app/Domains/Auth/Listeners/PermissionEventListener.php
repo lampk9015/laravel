@@ -64,7 +64,7 @@ class PermissionEventListener
      */
     public function subscribe($events)
     {
-        $events->listen(PermissionCreated::class, [static::class, 'onCreated']);
+        // $events->listen(PermissionCreated::class, [static::class, 'onCreated']);
 
         $events->listen(PermissionUpdated::class, [static::class, 'onUpdated']);
 

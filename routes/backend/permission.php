@@ -1,5 +1,5 @@
 <?php
-
+use App\Domains\Auth\Actions\Backend\Permission\CreateNewPermission;
 use App\Domains\Auth\Http\Controllers\Backend\Permission\PermissionController;
 use App\Domains\Auth\Models\Permission;
 use Tabuna\Breadcrumbs\Trail;
@@ -29,7 +29,8 @@ Route::group([
                     ->push(__('Create Permission'), route('admin.auth.permission.create'));
             });
 
-        Route::post('/', [PermissionController::class, 'store'])->name('store');
+        // Route::post('/', [PermissionController::class, 'store'])->name('store');
+        Route::post('/', CreateNewPermission::class)->name('store');
 
         Route::group(['prefix' => '{permission}'], function () {
             Route::get('edit', [PermissionController::class, 'edit'])
