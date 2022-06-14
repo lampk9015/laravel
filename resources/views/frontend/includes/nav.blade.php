@@ -11,6 +11,15 @@
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ml-auto">
+                @auth
+                    <li class="nav-item">
+                        <x-utils.link
+                            :href="route('frontend.tasks.index')"
+                            :active="activeClass(Route::is('frontend.tasks.index'))"
+                            :text="__('My Task')"
+                            class="nav-link" />
+                    </li>
+                @endauth
                 @if(config('boilerplate.locale.status') && count(config('boilerplate.locale.languages')) > 1)
                     <li class="nav-item dropdown">
                         <x-utils.link

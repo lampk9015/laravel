@@ -27,6 +27,8 @@ mix.setPublicPath('public')
         'sweetalert2',
         'lodash'
     ])
+    .copyDirectory('node_modules/moment/min', 'public/vendor/moment')
+    .copyDirectory('node_modules/tempusdominus-bootstrap-4/build', 'public/vendor/datetimepicker')
     .sourceMaps();
 
 if (mix.inProduction()) {
