@@ -47,7 +47,7 @@ $config->setRules([
         'phpdoc_single_line_var_spacing' => true,
         'phpdoc_var_without_name' => true,
         'trailing_comma_in_multiline' => ['elements' => ['arrays']],
-        'unary_operator_spaces' => true,
+        'unary_operator_spaces' => true
     ])
     ->setFinder($finder)
     ->setRiskyAllowed(true)

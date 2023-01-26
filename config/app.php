@@ -15,7 +15,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => env('APP_NAME', 'Laravel Boilerplate'),
 
     /*
     |--------------------------------------------------------------------------
@@ -56,7 +56,7 @@ return [
 
     'url' => env('APP_URL', 'http://localhost'),
 
-    'asset_url' => env('ASSET_URL'),
+    'asset_url' => env('ASSET_URL', null),
 
     /*
     |--------------------------------------------------------------------------
@@ -69,7 +69,7 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    'timezone' => env('APP_TIMEZONE', 'UTC'),
 
     /*
     |--------------------------------------------------------------------------
@@ -191,8 +191,14 @@ return [
          */
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
+        App\Providers\BladeServiceProvider::class,
         // App\Providers\BroadcastServiceProvider::class,
+        App\Providers\ComposerServiceProvider::class,
+        App\Providers\DebugServiceProvider::class,
         App\Providers\EventServiceProvider::class,
+        App\Providers\HelperServiceProvider::class,
+        App\Providers\LocaleServiceProvider::class,
+        App\Providers\ObserverServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
     ],
@@ -211,5 +217,47 @@ return [
     'aliases' => Facade::defaultAliases()->merge([
         // 'ExampleClass' => App\Example\ExampleClass::class,
     ])->toArray(),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Application Debug Blacklist
+    |--------------------------------------------------------------------------
+    |
+    | Remove the environment variables, database details and the information
+    | showing on Laravel Debug.
+    |
+    */
+
+    'debug_blacklist' => [
+        '_COOKIE' => array_keys($_COOKIE),
+
+        '_ENV' => [
+            'APP_KEY',
+            'ADMIN_DIR',
+            'DB_DATABASE',
+            'DB_USERNAME',
+            'DB_PASSWORD',
+            'REDIS_PASSWORD',
+            'MAIL_PASSWORD',
+            'PUSHER_APP_KEY',
+            'PUSHER_APP_SECRET',
+        ],
+
+        '_SERVER' => [
+            'APP_KEY',
+            'ADMIN_DIR',
+            'DB_DATABASE',
+            'DB_USERNAME',
+            'DB_PASSWORD',
+            'REDIS_PASSWORD',
+            'MAIL_PASSWORD',
+            'PUSHER_APP_KEY',
+            'PUSHER_APP_SECRET',
+        ],
+
+        '_POST' => [
+            'password',
+        ],
+    ],
 
 ];

@@ -1,27 +1,48 @@
 {
     "name": "laravel/laravel",
     "type": "project",
-    "description": "The Laravel Framework.",
-    "keywords": ["framework", "laravel"],
+    "description": "The Laravel Boilerplate Project.",
+    "keywords": [
+        "framework",
+        "laravel",
+        "boilerplate"
+    ],
     "license": "MIT",
     "require": {
         "php": "^8.0.2",
+        "arcanedev/log-viewer": "^9.0",
         "guzzlehttp/guzzle": "^7.2",
+        "jamesmills/laravel-timezone": "^1.11",
+        "lab404/laravel-impersonate": "^1.7",
+        "langleyfoxall/laravel-nist-password-rules": "^6.0.0",
+        "laragear/two-factor": "^1.0",
         "laravel/framework": "^9.19",
         "laravel/sanctum": "^3.0",
-        "laravel/tinker": "^2.7"
+        "laravel/socialite": "^5.5",
+        "laravel/tinker": "^2.7",
+        "laravel/ui": "^3.4",
+        "livewire/livewire": "^2.0",
+        "rappasoft/laravel-livewire-tables": "^2.7",
+        "rappasoft/lockout": "^4.0",
+        "spatie/laravel-activitylog": "^4.5",
+        "spatie/laravel-permission": "^5.5",
+        "tabuna/breadcrumbs": "^3.0"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.6",
         "barryvdh/laravel-ide-helper": "^2.12",
+        "brianium/paratest": "^6.4",
         "fakerphp/faker": "^1.9.1",
         "friendsofphp/php-cs-fixer": "^3.8",
+        "laravel/browser-kit-testing": "^6.3",
         "laravel/pint": "^1.0",
         "laravel/sail": "^1.0.1",
+        "laravel/telescope": "^4.9",
         "mockery/mockery": "^1.4.4",
         "neronmoon/scriptsdev": "^0.1.9",
         "nunomaduro/collision": "^6.1",
         "phpunit/phpunit": "^9.5.10",
+        "roave/security-advisories": "dev-master",
         "spatie/laravel-ignition": "^1.0"
     },
     "autoload": {
@@ -42,7 +63,9 @@
             "@php artisan package:discover --ansi"
         ],
         "post-update-cmd": [
-            "@php artisan vendor:publish --tag=laravel-assets --ansi --force"
+            "@php artisan vendor:publish --tag=laravel-assets --ansi --force",
+            "@php artisan ide-helper:generate",
+            "@php artisan ide-helper:meta"
         ],
         "post-root-package-install": [
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
@@ -67,11 +90,16 @@
             "composer cache-all"
         ],
         "test": "@php artisan test --parallel",
-        "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
+        "test-coverage": "vendor/bin/phpunit --coverage-html coverage",
+        "format": "vendor/bin/php-cs-fixer fix --allow-risky=yes"
     },
     "extra": {
         "laravel": {
-            "dont-discover": []
+            "dont-discover": [
+                "barryvdh/laravel-debugbar",
+                "barryvdh/laravel-ide-helper",
+                "laravel/telescope"
+            ]
         },
         "scripts-dev": {
             "ide-helper": [
@@ -93,12 +121,13 @@
     "config": {
         "allow-plugins": {
             "neronmoon/scriptsdev": true,
-            "pestphp/pest-plugin": true
+            "pestphp/pest-plugin": true,
+            "treeware/plant": true
         },
         "optimize-autoloader": true,
         "preferred-install": "dist",
         "sort-packages": true
     },
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "prefer-stable": true
 }

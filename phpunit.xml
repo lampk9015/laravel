@@ -19,10 +19,16 @@
     </coverage>
     <php>
         <env name="APP_ENV" value="testing"/>
+        <env name="APP_READ_ONLY" value="false"/>
+        <env name="APP_TESTING" value="true"/>
         <env name="BCRYPT_ROUNDS" value="4"/>
         <env name="CACHE_DRIVER" value="array"/>
-        <!-- <env name="DB_CONNECTION" value="sqlite"/> -->
-        <!-- <env name="DB_DATABASE" value=":memory:"/> -->
+        <env name="DB_CONNECTION" value="sqlite"/>
+        <env name="DB_DATABASE" value=":memory:"/>
+        <env name="MAIL_FROM_ADDRESS" value="app@test.com"/>
+        <env name="ENABLE_REGISTRATION" value="true"/>
+        <env name="LOGIN_CAPTCHA_STATUS" value="false"/>
+        <env name="REGISTRATION_CAPTCHA_STATUS" value="false"/>
         <env name="MAIL_MAILER" value="array"/>
         <env name="QUEUE_CONNECTION" value="sync"/>
         <env name="SESSION_DRIVER" value="array"/>
