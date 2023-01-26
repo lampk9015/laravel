@@ -2,10 +2,12 @@
 
 namespace App\Domains\Auth\Http\Controllers\Frontend\Auth;
 
+use App\Domains\Auth\Models\User;
 use App\Domains\Auth\Rules\UnusedPassword;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\ResetsPasswords;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use LangleyFoxall\LaravelNISTPasswordRules\PasswordRules;
 
 /**
@@ -50,7 +52,9 @@ class ResetPasswordController
     {
         return [
             'token' => ['required'],
-            'email' => ['required', 'max:255', 'email'],
+            'email' => ['required', 'max:255', 'email', Rule::exists(with(new User())->getTable())->where(function ($query) {
+                return $query->where('active', '=', true)->whereNotNull('email_verified_at');
+            })],
             'password' => array_merge(
                 [
                     'max:100',
